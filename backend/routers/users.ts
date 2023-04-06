@@ -13,9 +13,6 @@ router.get("/", async (_, res) => {
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  if (id && typeof id !== "string") {
-    res.json({ msg: "hoge" });
-  }
 
   const user = await prisma.user.findUnique({
     where: {
@@ -33,6 +30,35 @@ router.post("/", async (req, res) => {
     data: {
       email: email,
       name: name === undefined ? "NoName" : name,
+    },
+  });
+
+  res.json(post);
+});
+
+router.patch("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { email, name } = req.body;
+
+  const post = await prisma.user.update({
+    where: {
+      id: Number(id),
+    },
+    data: {
+      name: name,
+      email: email,
+    },
+  });
+
+  res.json(post);
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const post = await prisma.user.delete({
+    where: {
+      id: Number(id),
     },
   });
 
