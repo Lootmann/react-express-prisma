@@ -84,6 +84,19 @@ router.get("/:id/posts", async (req, res) => {
   res.json(posts);
 });
 
+router.get("/:id/posts/:postId", async (req, res) => {
+  const { id, postId } = req.params;
+
+  const post = await prisma.post.findFirst({
+    where: {
+      id: Number(postId),
+      userId: Number(id),
+    },
+  });
+
+  res.json(post);
+});
+
 router.post("/:id/posts", async (req, res) => {
   const { id } = req.params;
   const { title, content } = req.body;
