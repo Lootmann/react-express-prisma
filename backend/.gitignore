@@ -10,3 +10,4 @@ databases/**/migrations/
 experimental/**/*.db
 **/dev.db
 *.env*
+prisma/*.db-journal
